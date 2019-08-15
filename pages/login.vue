@@ -14,7 +14,7 @@
                                     <label class="font-bold text-grey-darker block mb-2 henghe-text">Account</label>
                                     <input 
                                         type="text" 
-                                        v-model="email"
+                                        v-model="form.email"
                                         class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow" 
                                         placeholder="Your Email">
                                 </div>
@@ -23,7 +23,7 @@
                                     <label class="font-bold text-grey-darker block mb-2">Password</label>
                                     <input 
                                         type="password" 
-                                        v-model="password"
+                                        v-model="form.password"
                                         class="block appearance-none w-full bg-white border border-grey-light hover:border-grey px-2 py-2 rounded shadow" 
                                         placeholder="Your Password">
                                         <p v-bind:class="{ hidden : isWrong }" class="text-red-500 text-xs italic">Incorrect username or password !</p>
@@ -52,13 +52,17 @@
 </template>
 
 <script>
+    import serviceAccount from '@/src/serviceAccount.js';
     import servicesLogo from '@/functions/servicesLogo.js';
+
     export default {
         data () {
             return { 
                 isWrong:true,
-                email: '',
-                password:'',
+                form: {
+                    email: '',
+                    password:'',
+                },
                 serviceLogo:''
             }
         },
@@ -70,7 +74,14 @@
                 this.serviceLogo = servicesLogo(this.$route.query.service_id);
             },
             doLogin() {
-                this.isWrong = false;
+                var _self = this;
+                serviceAccount.doLogin(_self.form, function(res) {
+                    if(res.status) {
+                        _self.$router.replace('/dashboard');
+                    } else {
+                        alert(res.error);
+                    }
+                })
             }
         }
     }

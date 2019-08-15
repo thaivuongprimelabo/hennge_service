@@ -7,7 +7,10 @@ export default {
   },
   env: {
     // baseUrl: process.env.BASE_URL || 'http://localhost:3000'
-    baseUrl: 'https://testfirebase9999.firebaseapp.com'
+    baseUrl: 'https://hengge-service.web.app'
+  },
+  server: {
+    port: 3001, // default: 3000
   },
   /*
   ** Headers of the page
@@ -71,7 +74,8 @@ export default {
     { path: '/api/sendmail', handler: sendmail }
   ],
   axios: {
-    baseURL: 'https://testfirebase9999.firebaseapp.com/api'
+    baseUrl: 'https://hengge-service.web.app/api',
+    // baseURL: 'https://testfirebase9999.firebaseapp.com/api'
     // baseURL: 'http://localhost:5000/testfirebase9999/us-central1/api'
     // baseURL: 'http://localhost:3000/api'
   },

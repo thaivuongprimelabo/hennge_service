@@ -96,8 +96,9 @@
 </template>
 
 <script>
-    import newServiceAccount from '@/functions/newServiceAccount.js';
+    import serviceAccount from '@/src/serviceAccount.js';
     import servicesLogo from '@/functions/servicesLogo.js';
+
     export default {
         data () {
             return { 
@@ -110,6 +111,7 @@
                 department_code: '',
                 form : {
                     serviceaccount_id: '',
+                    uuid: '',
                     name_first_en: '',
                     name_first_jp: '',
                     name_last_en: '',
@@ -191,28 +193,12 @@
             },
             doRegister() {
                 var _self = this;
-                var passwordTemp = _self.generateToken(16);
+                var passwordTemp = '!23456Abc';
                 _self.form.serviceaccount_id = _self.service_code + _self.client_code + _self.department_code + 'b2';
-                var config = {
-                    from: 'Administrator',
-                    to: _self.form.email,
-                    subject: '【CHROMO】 Service account information',
-                    html: './email_template/confirm.html',
-                    data: {
-                        serviceaccount_id: _self.form.serviceaccount_id,
-                        password: passwordTemp,
-                        name_first_en: _self.form.name_first_en,
-                        name_last_en: _self.form.name_last_en
-                    }
-                }
-
-                newServiceAccount.doReigster(_self.form, passwordTemp, async function(status, message) {
+                serviceAccount.doReigster(_self.form, passwordTemp, async function(status, message) {
                     if(status) {
-                        var res = await _self.$axios.$post('/sendmail', {config: config});
-                        if(res.status) {
-                            alert(message);
-                            _self.$router.replace('/login');
-                        }
+                        alert(message);
+                        _self.$router.replace('/login');
                     } else {
                         alert(message);
                     }
