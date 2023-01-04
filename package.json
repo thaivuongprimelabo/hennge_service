@@ -16,7 +16,7 @@
     "firebase": "^6.3.5",
     "handlebars": "^4.1.2",
     "nodemailer": "^6.3.0",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.15.8"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^1.0.0"
